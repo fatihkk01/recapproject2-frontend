@@ -16,4 +16,3 @@ export class ColorService {
     return this.httpClient.get<ListResponseModel<Color>>(this.apiUrl);
   }
 }
- 
