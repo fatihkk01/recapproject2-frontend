@@ -1,3 +1,13 @@
+
+<div class="mb-3">
+  <label for="filterText" class="form-label">Search Car</label>
+  <input type="text" [(ngModel)]="filterText" class="form-control" id="filterText" placeholder="Please enter the word">
+</div>
+
+<div *ngIf="filterText" class="alert alert-success">
+  {{filterText}} aradınız
+</div>
+
 <table class="table table-striped table-hover">
   <thead>
     <tr>
@@ -7,18 +17,24 @@
       <th>Model Year</th>
       <th>Daily Price</th>
       <th>Description</th>
+      <th></th>
+      <th></th>
+      <th></th>
     </tr>
   </thead>
   <tbody>
     <tr (click)="setCurrentCar(car)"  
-    *ngFor="let car of cars" 
-    routerLink="/cars/carDetails/{{car.carId}}">
+    *ngFor="let car of cars | filterPipeCar:filterText" 
+    >
       <td>{{ car.carId }}</td>
       <td>{{ car.colorName }}</td>
       <td>{{ car.brandName }}</td>
       <td>{{ car.modelYear }}</td>
       <td>{{ car.dailyPrice }}</td>
       <td>{{ car.description }}</td>
+      <td><button routerLink="/cars/carDetails/{{car.carId}}" type="button" class="btn btn-warning">Update</button></td>
+      <td><button routerLink="/cars/carDetails/{{car.carId}}" type="button" class="btn btn-primary">Details</button></td>
+      <td><button routerLink="/cars/rentcar/{{car.carId}}" type="button" class="btn btn-success">Rent</button></td>
     </tr>
   </tbody>
 </table>

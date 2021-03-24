@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute , Router } from '@angular/router';
 import { Car } from 'src/app/models/car';
 import { CarService } from 'src/app/services/car.service';
 
@@ -11,12 +11,17 @@ import { CarService } from 'src/app/services/car.service';
 export class CarComponent implements OnInit {
   cars: Car[] = [];
   currentCar:Car;
+  //[(ngModel)] ile html deki filterText id li form elemanını .ts uzantılı dosyadaki filterText değişkeni ile eşleştirdik
+  filterText = ""; 
 
-  constructor(private carService: CarService, private activatedRoute:ActivatedRoute) {}
+  constructor(private carService: CarService, private _router:Router, private activatedRoute:ActivatedRoute) {}
 
   ngOnInit(): void {
     this.activatedRoute.params.subscribe(params=>{
-      if(params["brandId"]){
+      if(params["brandId"]&&params["colorId"]){
+        this.getCarsByBrandIdAndColorId(params["brandId"],params["colorId"]);
+      }
+      else if(params["brandId"]){
         this.getCarsByBrandId(params["brandId"]);
       }
       else if(params["colorId"]){
@@ -50,9 +55,13 @@ export class CarComponent implements OnInit {
     });
   }
 
-  getCarDetails(){
-    
+  getCarsByBrandIdAndColorId(brandId:number,colorId:number){
+    this.carService.getCarsByBrandIdAndColorId(brandId,colorId).subscribe((response)=>{
+      this.cars = response.data;
+    })
   }
+
+ 
   
 
 }

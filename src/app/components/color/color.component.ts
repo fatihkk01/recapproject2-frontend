@@ -18,7 +18,7 @@ export class ColorComponent implements OnInit {
     this.getColors();
   }
   getColors() {
-    this.colorService.getCars().subscribe((response) => {
+    this.colorService.getColors().subscribe((response) => {
       this.colors = response.data;
     });
   }

@@ -1,0 +1,58 @@
+<div class="content">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card-header">
+                <h5 class="title">Car Add</h5>
+            </div>
+            <div class="card-body">
+                <form [formGroup]="carAddForm">
+                   
+                    <div class="mb-3">
+                        <label for="colorName">Color Name</label>
+                        <div class="form-group">
+                            <select [ngModel]="currentColor" id="colorId" formControlName="colorId" (ngModelChange)="setCurrentColor($event)" class="form-select" required>
+                                <option [ngValue]="color" *ngFor="let color of colors" value="color.colorId">{{color.colorName}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="brandName">Brand Name</label>
+                        <div class="form-group">
+                            <select [ngModel]="currentBrand" id="brandId" formControlName="brandId" (ngModelChange)="setCurrentBrand($event)"  class="form-select">
+                                <option [ngValue]="brand" *ngFor="let brand of brands" value="brand.brandId">{{brand.brandName}}</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="modelYear">Model Year</label>
+                        <div class="form-group">
+                            <input type="text" id="modelYear" formControlName="modelYear" class="form-control" placeholder="Model Year">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="dailyPrice">Daily Price</label>
+                        <div class="form-group">
+                            <input type="number" id="dailyPrice" formControlName="dailyPrice" class="form-control" placeholder="Daily Price">
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="description">Description</label>
+                        <div class="form-group">
+                            <input type="text" id="description" formControlName="description" class="form-control" placeholder="Description">
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="card-footer">
+                <button class="btn btn-fill btn-primary" (click)="addCar()">Add</button>
+            </div>
+
+        </div>
+    </div>
+</div>
