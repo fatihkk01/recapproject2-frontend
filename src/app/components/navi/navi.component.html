@@ -14,17 +14,23 @@
           </li>
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              Dropdown
+              Add
             </a>
             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-              <li><a class="dropdown-item" href="#">Action</a></li>
-              <li><a class="dropdown-item" href="#">Another action</a></li>
-              <li><hr class="dropdown-divider"></li>
-              <li><a class="dropdown-item" href="#">Something else here</a></li>
+              <li><a class="dropdown-item" routerLink="cars/add">Add Car</a></li>
+              <li><a class="dropdown-item" routerLink="brand/add">Add Brand</a></li>
+              <li><a class="dropdown-item" routerLink="color/add">Add Color</a></li>
             </ul>
           </li>
-          <li class="nav-item">
-            <a routerLink="cars/add" class="nav-link">Add Car</a>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              List
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <li><a class="dropdown-item" routerLink="cars">List Car</a></li>
+              <li><a class="dropdown-item" routerLink="brands">List Brand</a></li>
+              <li><a class="dropdown-item" routerLink="colors">List Color</a></li>
+            </ul>
           </li>
           <li class="nav-item">
             <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>

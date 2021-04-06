@@ -5,6 +5,12 @@ import { FormGroup,FormBuilder,FormControl,Validators} from "@angular/forms";
 import { Car } from 'src/app/models/car';
 import { CarService } from 'src/app/services/car.service';
 import { ToastrService } from 'ngx-toastr';
+import { RentalControlModel } from 'src/app/models/rentalControlModel';
+import { RentalService } from 'src/app/services/rental.service';
+import { CustomerService } from 'src/app/services/customer.service';
+import { Customer } from 'src/app/models/customer';
+import { Rental } from 'src/app/models/rental';
+import { DatePipe } from '@angular/common';
 
 
 @Component({
@@ -14,50 +20,69 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class RentCarComponent implements OnInit {
 
-  carRentForm : FormGroup;
-  currentCar:Car[]=[];
-  currentPrice = 0;
+  carRentForm:FormGroup;
+  customers:Customer[];
+
+  rentInfo:RentalControlModel ={carId:0,rentDate:Date.now(),returnDate:Date.now(),customerId:1};
+
+  carId:number;
+
+  currentCustomer:Customer;
+
 
   constructor(private formBuilder:FormBuilder,
      private toastrService:ToastrService,
-     private carService:CarService,
-     private activatedToute:ActivatedRoute) { }
+     private rentalService:RentalService,
+     private customerService:CustomerService,
+     private activatedRoute:ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.activatedToute.params.subscribe((params)=>{
-      this.createCarRentForm();
-      if(params["carId"]){
-        this.getCarById(params["carId"]);
-      }
-      else{
-        this.toastrService.error("Payment transaction unsuccess","Error")
-      }
-    })
+    this.getCustomers();
+    this.createCarRentForm();
   }
 
   createCarRentForm(){
     this.carRentForm = this.formBuilder.group({
-      carId:["",Validators.required],
-      customerName:["",Validators.required],
-      cardExpirationMonth:["",Validators.required],
-      cardExpirationYear:["",Validators.required],
+      customerId:["",Validators.required],
       rentDate:["",Validators.required],
       returnDate:["",Validators.required],
-      cardNumber:["",Validators.minLength(16)],
-      cvCode:["",Validators.required]
+      cardNumber:["",Validators.required],
+      cardExpirationMonth:["",Validators.required],
+      cardExpirationYear:["",Validators.required],
+      cardCvvNumber:["",Validators.required]
     })
   }
 
-  pay(){
-    let rentCarModel = Object.assign({},this.carRentForm.value);
-    console.log(rentCarModel);
-     this.toastrService.success("Payment transaction is success","Success")
+  rentCar(){
+    if(this.carRentForm.valid){
+      let rentCarModel = Object.assign({},this.carRentForm.value);
+      this.activatedRoute.params.subscribe((params)=>{
+        if(params["carId"]){
+          this.rentInfo.carId = Number(params["carId"]);
+          this.rentInfo.customerId = rentCarModel.customerId;
+          this.rentInfo.rentDate = rentCarModel.rentDate;
+          this.rentInfo.returnDate = rentCarModel.returnDate;
+          this.rentalService.add(this.rentInfo).subscribe((response)=>{
+            this.toastrService.success(response.message,"Success");
+          },(responseError)=>{
+            this.toastrService.error(responseError.error.message,"Error");
+          })
+        }
+      })
+    }
+    else{
+      this.toastrService.error("Form is not filled","Error");
+    }
   }
 
-  getCarById(carId:number){
-    this.carService.getCarById(carId).subscribe((response)=>{
-      this.currentCar = response.data;
+  getCustomers(){
+    this.customerService.getCustomers().subscribe((response)=>{
+      this.customers = response.data;
     })
+  }
+  
+  setCurrentCustomer(customer:Customer){
+    this.currentCustomer = customer;
   }
 
 }

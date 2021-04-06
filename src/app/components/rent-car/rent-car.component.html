@@ -1,76 +1,56 @@
 
-<div class="content">
-    <div class="col-md-12">
+<div class="container">
+    <div class="content">
         <div class="card">
-            <div class="card-header"><h5 class="title">Ürün ekle</h5></div>
+            <div class="card-header">
+            <h5>Rent Car</h5>
+            </div>
             <div class="card-body">
                 <form [formGroup]="carRentForm">
                     <div class="mb-3">
-                        <label for="customerName">First Name & Last Name</label>
+                        <label for="customerId" class="title">Customer</label>
                         <div class="form-group">
-                            <input type="text" 
-                            id="customerName" 
-                            formControlName="customerName" class="form-control" 
-                            placeholder="First Name & Last Name"/>
+                            <select [ngModel]="currentCustomer" id="customerId" formControlName="customerId" (ngModelChange)="setCurrentCustomer($event)"  class="form-select">
+                                <option [ngValue]="customer.userId" *ngFor="let customer of customers" value="customer.userId">{{customer.companyName}}</option>
+                            </select>
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="rentDate">Rent Date</label>
+                        <label for="rentDate" class="title">Rent Date</label>
                         <div class="form-group">
-                            <input type="datetime-local" 
-                            id="rentDate" 
-                            formControlName="rentDate" class="form-control" 
-                            />
-                        </div>
-
-                        <label for="rentDate">Return Date</label>
-                        <div class="form-group">
-                            <input type="datetime-local" 
-                            id="returnDate" 
-                            formControlName="returnDate" class="form-control" 
-                            />
+                            <input type="date" id="rentDate" formControlName="rentDate" class="form-control">
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label for="cardNumber">Card Number</label>
+                        <label for="returnDate" class="title">Return Date</label>
                         <div class="form-group">
-                            <input type="number" 
-                            id="cardNumber" 
-                            formControlName="cardNumber" class="form-control" 
-                            placeholder="Card Number" maxlength="16"/>
+                            <input type="date" id="returnDate" formControlName="returnDate" class="form-control">
                         </div>
                     </div>
-                   <div class="mb-3">
-                    <label for="cardExpiration">Card Expiration</label>
-                    <div class="form-group">
-                        <input type="number" 
-                        id="cardExpirationMonth" 
-                        formControlName="cardExpirationMonth" class="form-control" 
-                        placeholder="MM" maxlength="2"/>
-                        <input type="number" 
-                        id="cardExpirationDay" 
-                        formControlName="cardExpirationYear" class="form-control" 
-                        placeholder="YY" maxlength="2"/>
-                        
+                    <div class="mb-3">
+                        <label for="cardNumber" class="title">Card Number</label>
+                        <div class="form-group">
+                            <input type="text" id="cardNumber" formControlName="cardNumber" class="form-control" placeholder="Card Number">
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label for="cvCode">CVCode</label>
-                        <input type="number" 
-                        id="cvCode" 
-                        formControlName="cvCode" class="form-control" 
-                        placeholder="CV" maxlength="3"/>
+                    <div class="mb-3">
+                        <label class="title">Card Expiration</label>
+                        <div class="form-group">
+                            <input type="text" id="cardExpirationMonth" formControlName="cardExpirationMonth" class="form-control" placeholder="MM">
+                            <input type="text" id="cardExpirationYear" formControlName="cardExpirationYear" class="form-control" placeholder="YY">
+                        </div>
                     </div>
-                   </div>
-                   <div  class="mb-3">
-                       <label></label>
-                   </div>
+                    <div class="mb-3">
+                        <label for="cardCvvNumber" class="title">CVV Code</label>
+                        <div class="form-group">
+                            <input type="text" id="cardCvvNumber" formControlName="cardCvvNumber" class="form-control" placeholder="***">
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="card-footer">
-                <button routerLink="/cars" class="btn btn-fill btn-primary" (click)="pay()">Pay</button>
+                <button class="btn btn-primary" (click)="rentCar()">Rent</button>
             </div>
         </div>
-        
     </div>
-    
 </div>

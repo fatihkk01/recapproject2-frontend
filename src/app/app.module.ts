@@ -12,12 +12,19 @@ import { ColorComponent } from './components/color/color.component';
 import { CustomerComponent } from './components/customer/customer.component';
 import { RentalComponent } from './components/rental/rental.component';
 import { NaviComponent } from './components/navi/navi.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { CarDetailsComponent } from './components/car-details/car-details.component';
 import { FilterPipeCarPipe } from './pipes/carPipe/filter-pipe-car.pipe';
 import { CarFilterComponent } from './components/car-filter/car-filter.component';
 import { RentCarComponent } from './components/rent-car/rent-car.component';
 import { CarAddComponent } from './components/car-add/car-add.component';
+import { BrandAddComponent } from './components/brand-add/brand-add.component';
+import { ColorAddComponent } from './components/color-add/color-add.component';
+import { BrandUpdateComponent } from './components/brand-update/brand-update.component';
+import { ColorUpdateComponent } from './components/color-update/color-update.component';
+import { CarUpdateComponent } from './components/car-update/car-update.component';
+import { LoginComponent } from './components/login/login.component';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -33,6 +40,12 @@ import { CarAddComponent } from './components/car-add/car-add.component';
     CarFilterComponent,
     RentCarComponent,
     CarAddComponent,
+    BrandAddComponent,
+    ColorAddComponent,
+    BrandUpdateComponent,
+    ColorUpdateComponent,
+    CarUpdateComponent,
+    LoginComponent,
   ],
   imports: [
     BrowserModule,
@@ -48,7 +61,9 @@ import { CarAddComponent } from './components/car-add/car-add.component';
 
     })
   ],
-  providers: [],
+  providers: [
+    {provide:HTTP_INTERCEPTORS, useClass:AuthInterceptor, multi:true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
